@@ -1,0 +1,40 @@
+version: '3.8'
+
+networks:
+  dev:
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    restart: always
+    volumes:
+      - ./:/var/www/
+    depends_on:
+      - postgres
+    networks:
+      - dev
+
+  postgres:
+    image: postgres:13.1-alpine
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - dev
+
+  adminer:
+    image: adminer:4
+    restart: always
+    ports:
+      - "8030:8080"
+    depends_on:
+      - php
+      - postgres
+    networks:
+      - dev
