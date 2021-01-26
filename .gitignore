@@ -12,8 +12,9 @@
 /.idea/
 
 /docker/postgres/
-
 /docker-compose.override.yml/
+
+/config/jwt/*
 
 ###> symfony/phpunit-bridge ###
 .phpunit
