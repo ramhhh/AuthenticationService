@@ -20,6 +20,7 @@
         "symfony/phpunit-bridge": "^5.2",
         "symfony/proxy-manager-bridge": "5.2.*",
         "symfony/security-bundle": "5.2.*",
+        "symfony/validator": "5.2.*",
         "symfony/yaml": "5.2.*"
     },
     "config": {
@@ -66,6 +67,7 @@
         }
     },
     "require-dev": {
+        "doctrine/data-fixtures": "^1.5",
         "symfony/maker-bundle": "^1.28"
     }
 }
