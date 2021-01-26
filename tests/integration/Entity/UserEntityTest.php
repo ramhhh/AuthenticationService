@@ -10,6 +10,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class UserEntityTest extends KernelTestCase
 {
@@ -76,6 +77,10 @@ class UserEntityTest extends KernelTestCase
         $this->entityManager->refresh($user);
         $this->assertFalse($this->passwordEncoder->isPasswordValid($user,'testPassword'));
         $this->assertTrue($this->passwordEncoder->isPasswordValid($user,'newpassword'));
+
+        $this->expectException(UnsupportedUserException::class);
+        $nonAppUser = new \Symfony\Component\Security\Core\User\User('username','password');
+        $this->userRepository->upgradePassword($nonAppUser,'password');
 
     }
 
