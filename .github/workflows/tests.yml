@@ -19,5 +19,5 @@ jobs:
         run: docker-compose up -d
         
       - name: Init & PHPUnit
-        run: docker-compose run -T php bash -c "docker/init.sh && php bin/phpunit --zend_extension=xdebug --xdebug.mode=coverage --coverage-clover clover.xml --configuration phpunit.xml.dist"
+        run: docker-compose run -T php bash -c "docker/init.sh && php -dzend_extension=xdebug -dxdebug.mode=coverage bin/phpunit --coverage-clover clover.xml --configuration phpunit.xml.dist"
 
