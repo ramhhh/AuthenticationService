@@ -14,6 +14,8 @@ services:
       - /var/www/vendor
       - /var/www/var
       - /var/www/config/jwt
+    ports:
+      - "9003:9000"
     depends_on:
       - postgres
     networks:
