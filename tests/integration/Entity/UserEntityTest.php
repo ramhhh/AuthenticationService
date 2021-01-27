@@ -6,39 +6,24 @@ namespace App\Tests\integration\Entity;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Tests\integration\IntegrationTestCase;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-class UserEntityTest extends KernelTestCase
+class UserEntityTest extends IntegrationTestCase
 {
-    private UserPasswordEncoder|null $passwordEncoder;
-    private EntityManager|null $entityManager;
-    private UserRepository $userRepository;
-
-    protected function setUp(): void
-    {
-        self::bootKernel();
-        $this->passwordEncoder = self::$container->get('security.password_encoder');
-        $this->entityManager = self::$container->get('doctrine.orm.entity_manager');
-        $this->userRepository = $this->entityManager->getRepository(User::class);
-
-        $purger = new ORMPurger($this->entityManager);
-        $purger->purge();
-    }
-
-
     public function testPersistingUser() {
         $user = new User();
         $user->setUsername('testUsername');
-        $user->setPassword($this->passwordEncoder->encodePassword($user,'testPassword'));
+        $user->setPassword($this->getUserPasswordEncoder()->encodePassword($user,'testPassword'));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
 
-        $this->assertEquals(1,$this->userRepository->count([]));
+        $this->assertEquals(1,$this->getEntityManager()->getRepository(User::class)->count([]));
     }
 
     public function testDuplicatedValidatorUser() {
@@ -46,14 +31,14 @@ class UserEntityTest extends KernelTestCase
 
         $user = new User();
         $user->setUsername('testUsername');
-        $user->setPassword($this->passwordEncoder->encodePassword($user,'testPassword'));
+        $user->setPassword($this->getUserPasswordEncoder()->encodePassword($user,'testPassword'));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
 
         $user2 = new User();
         $user2->setUsername('testUsername');
-        $user2->setPassword($this->passwordEncoder->encodePassword($user2,'testPassword'));
+        $user2->setPassword($this->getUserPasswordEncoder()->encodePassword($user2,'testPassword'));
 
         $violationList = $validator->validate($user2);
         $this->assertEquals(1,$violationList->count());
@@ -64,31 +49,23 @@ class UserEntityTest extends KernelTestCase
     public function testUpgradePassword() {
         $user = new User();
         $user->setUsername('testUsername');
-        $user->setPassword($this->passwordEncoder->encodePassword($user,'testPassword'));
+        $user->setPassword($this->getUserPasswordEncoder()->encodePassword($user,'testPassword'));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
 
-        $this->entityManager->refresh($user);
-        $this->assertTrue($this->passwordEncoder->isPasswordValid($user,'testPassword'));
+        $this->getEntityManager()->refresh($user);
+        $this->assertTrue($this->getUserPasswordEncoder()->isPasswordValid($user,'testPassword'));
 
-        $this->userRepository->upgradePassword($user,$this->passwordEncoder->encodePassword($user,'newpassword'));
+        $this->getEntityManager()->getRepository(User::class)->upgradePassword($user,$this->getUserPasswordEncoder()->encodePassword($user,'newpassword'));
 
-        $this->entityManager->refresh($user);
-        $this->assertFalse($this->passwordEncoder->isPasswordValid($user,'testPassword'));
-        $this->assertTrue($this->passwordEncoder->isPasswordValid($user,'newpassword'));
+        $this->getEntityManager()->refresh($user);
+        $this->assertFalse($this->getUserPasswordEncoder()->isPasswordValid($user,'testPassword'));
+        $this->assertTrue($this->getUserPasswordEncoder()->isPasswordValid($user,'newpassword'));
 
         $this->expectException(UnsupportedUserException::class);
         $nonAppUser = new \Symfony\Component\Security\Core\User\User('username','password');
-        $this->userRepository->upgradePassword($nonAppUser,'password');
+        $this->getEntityManager()->getRepository(User::class)->upgradePassword($nonAppUser,'password');
 
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 }
