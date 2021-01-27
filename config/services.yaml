@@ -32,3 +32,12 @@ services:
 
     App\Service\JWTCreator:
         public: true
+
+    App\Security\Authenticators\:
+        resource: '../src/Security/Authenticators/'
+        tags: ['app.authenticators']
+
+    App\Security\AuthenticatorHandler:
+        public: true
+        arguments:
+            - !tagged_iterator app.authenticators
