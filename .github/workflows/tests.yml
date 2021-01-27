@@ -23,4 +23,6 @@ jobs:
    
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.1.4-gamma10
+        with:
+          push_badge: true
 
