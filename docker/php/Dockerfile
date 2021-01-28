@@ -8,7 +8,9 @@ RUN set -ex \
 
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-enable xdebug \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 
 RUN docker-php-ext-install pdo pdo_pgsql
 
