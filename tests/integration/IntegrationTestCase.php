@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class IntegrationTestCase extends KernelTestCase
+abstract class IntegrationTestCase extends KernelTestCase
 {
     private EntityManagerInterface|null $entityManager;
 
