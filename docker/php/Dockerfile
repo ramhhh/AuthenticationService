@@ -4,13 +4,16 @@ RUN apk add --no-cache bash
 
 RUN set -ex \
   && apk --no-cache add \
-    postgresql-dev
+    postgresql-dev \
+    rabbitmq-c-dev
 
 RUN apk add --no-cache $PHPIZE_DEPS \
+    && docker-php-ext-install sockets \
     && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && pecl install amqp \
-    && docker-php-ext-enable amqp
+    && docker-php-ext-enable xdebug
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/install-php-extensions
+RUN install-php-extensions amqp
 
 RUN docker-php-ext-install pdo pdo_pgsql
 
