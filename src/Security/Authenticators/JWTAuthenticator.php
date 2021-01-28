@@ -49,7 +49,7 @@ class JWTAuthenticator implements AuthenticatorInterface
     {
         $data = $this->JWTEncoder->decode($credentials);
 
-        $username = $data['username']??throw new CustomUserMessageAuthenticationException('Invalid token.');
+        $username = $data['username'];
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
 

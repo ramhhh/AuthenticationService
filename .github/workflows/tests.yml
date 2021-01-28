@@ -19,5 +19,10 @@ jobs:
         run: docker-compose up -d
         
       - name: Init & PHPUnit
-        run: docker-compose run -T php bash -c "docker/init.sh && php bin/phpunit"
-
+        run: docker-compose run -T php bash -c "docker/init.sh && php -dzend_extension=xdebug -dxdebug.mode=coverage bin/phpunit --coverage-clover clover.xml --configuration phpunit.xml.dist"
+   
+      - name: phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.0
+        with:
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
