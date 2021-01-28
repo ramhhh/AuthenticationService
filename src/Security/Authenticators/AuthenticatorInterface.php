@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface AuthenticatorInterface
 {
-    function supports(Request $request);
-    function getCredentials(Request $request);
-    function getUser($credentials);
-    function checkCredentials($credentials, User $user);
+    public function supports(Request $request);
+    public function getCredentials(Request $request);
+    public function getUser($credentials);
+    public function checkCredentials($credentials, User $user);
 }
