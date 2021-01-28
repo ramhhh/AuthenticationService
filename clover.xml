@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1611824317">
-  <project timestamp="1611824317">
+<coverage generated="1611825719">
+  <project timestamp="1611825719">
     <file name="/var/www/src/Entity/User.php">
       <class name="App\Entity\User" namespace="global">
         <metrics complexity="9" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="23" coveredelements="23"/>
@@ -60,12 +60,10 @@
       <line num="26" type="stmt" count="1"/>
       <line num="27" type="stmt" count="0"/>
       <line num="30" type="stmt" count="1"/>
-      <line num="32" type="stmt" count="1"/>
-      <metrics loc="31" ncloc="30" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="8" elements="11" coveredelements="9"/>
+      <metrics loc="32" ncloc="31" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="8" elements="11" coveredelements="9"/>
     </file>
     <file name="/var/www/src/Security/Authenticators/AuthenticatorInterface.php">
-      <line num="16" type="stmt" count="1"/>
-      <metrics loc="15" ncloc="15" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      <metrics loc="16" ncloc="16" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="/var/www/src/Security/Authenticators/JWTAuthenticator.php">
       <class name="App\Security\Authenticators\JWTAuthenticator" namespace="global">
@@ -114,9 +112,8 @@
       <line num="38" type="stmt" count="4"/>
       <line num="39" type="stmt" count="4"/>
       <line num="42" type="stmt" count="4"/>
-      <line num="44" type="stmt" count="1"/>
-      <metrics loc="43" ncloc="43" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+      <metrics loc="44" ncloc="44" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
     </file>
-    <metrics files="6" loc="316" ncloc="261" classes="5" methods="20" coveredmethods="19" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="61" elements="82" coveredelements="80"/>
+    <metrics files="6" loc="319" ncloc="264" classes="5" methods="20" coveredmethods="19" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="61" elements="82" coveredelements="80"/>
   </project>
 </coverage>
