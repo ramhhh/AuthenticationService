@@ -1,10 +1,12 @@
 version: '3.8'
 
 networks:
-  dev:
+  rabbitmq_main:
+    external: true
 
 services:
-  php:
+  authenticationservice_php:
+    container_name: authenticationservice_php
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -13,14 +15,13 @@ services:
       - ./:/var/www/
       - /var/www/vendor
       - /var/www/var
-    ports:
-      - "9003:9000"
     depends_on:
-      - postgres
+      - authenticationservice_postgres
     networks:
-      - dev
+      - rabbitmq_main
 
-  postgres:
+  authenticationservice_postgres:
+    container_name: authenticationservice_postgres
     image: postgres:13.1-alpine
     ports:
       - "5434:5432"
@@ -30,15 +31,16 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     networks:
-      - dev
+      - rabbitmq_main
 
-  adminer:
+  authenticationservice_adminer:
+    container_name: authenticationservice_adminer
     image: adminer:4
     restart: always
     ports:
       - "8030:8080"
     depends_on:
-      - php
-      - postgres
+      - authenticationservice_php
+      - authenticationservice_postgres
     networks:
-      - dev
+      - rabbitmq_main

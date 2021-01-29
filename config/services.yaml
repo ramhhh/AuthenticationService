@@ -37,6 +37,12 @@ services:
         resource: '../src/Security/Authenticators/'
         tags: ['app.authenticators']
 
+
+
+    App\MessageHandler\:
+        resource: '../src/MessageHandler/'
+        public: true
+
     App\Security\AuthenticatorHandler:
         public: true
         arguments:
