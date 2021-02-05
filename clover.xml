@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1611829660">
-  <project timestamp="1611829660">
+<coverage generated="1612532449">
+  <project timestamp="1612532449">
     <file name="/var/www/src/Entity/User.php">
       <class name="App\Entity\User" namespace="global">
         <metrics complexity="9" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="23" coveredelements="23"/>
